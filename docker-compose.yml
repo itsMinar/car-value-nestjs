@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: nestjs-app
+    build: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - sqlite
+
+  sqlite:
+    container_name: sqlite-db
+    image: nouchka/sqlite3
+    volumes:
+      - ./data:/db
+    command: tail -f /dev/null
+
+volumes:
+  node_modules:
+  db:
